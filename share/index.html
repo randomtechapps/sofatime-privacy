@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SofaTime</title>
+  <style>
+    :root { --bg:#0D0D0F; --card:#17171C; --border:#26262E; --text:#F5F5F7;
+            --muted:#9A9AA5; --faint:#6B6B76; --accent:#FF5470; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text);
+           font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+           min-height:100vh; display:flex; flex-direction:column; align-items:center;
+           padding:32px 20px; }
+    .brand { display:flex; align-items:center; gap:8px; font-weight:800;
+             font-size:20px; letter-spacing:.2px; margin-bottom:28px; }
+    .brand .dot { color:var(--accent); }
+    .card { width:100%; max-width:420px; background:var(--card);
+            border:1px solid var(--border); border-radius:20px; overflow:hidden;
+            text-align:center; }
+    .poster { width:160px; aspect-ratio:2/3; object-fit:cover; border-radius:12px;
+              margin:24px auto 0; display:block; background:#1F1F26; }
+    .by { color:var(--accent); font-weight:700; font-size:14px; margin:20px 20px 0; }
+    .title { font-size:24px; font-weight:800; margin:6px 20px 4px; line-height:1.25; }
+    .kind { color:var(--muted); font-size:13px; font-weight:600;
+            text-transform:uppercase; letter-spacing:.6px; }
+    .actions { padding:22px 20px 24px; display:flex; flex-direction:column; gap:12px; }
+    .btn { display:block; text-decoration:none; font-weight:800; font-size:16px;
+           padding:14px; border-radius:12px; }
+    .btn.primary { background:var(--accent); color:#0D0D0F; }
+    .btn.secondary { background:transparent; color:var(--text);
+                     border:1px solid var(--border); }
+    .foot { color:var(--faint); font-size:12px; line-height:1.5; margin-top:26px;
+            max-width:420px; text-align:center; }
+    .foot a { color:var(--faint); }
+  </style>
+</head>
+<body>
+  <div class="brand">🛋️ Sofa<span class="dot">Time</span></div>
+
+  <div class="card">
+    <img id="poster" class="poster" alt="" style="display:none" />
+    <p id="by" class="by" style="display:none"></p>
+    <h1 id="title" class="title">SofaTime</h1>
+    <p id="kind" class="kind"></p>
+    <div class="actions">
+      <a id="open" class="btn primary" href="#">Open in SofaTime</a>
+      <a id="play" class="btn secondary"
+         href="https://play.google.com/store/apps/details?id=com.sofatime.app">
+         Get it on Google Play</a>
+    </div>
+  </div>
+
+  <p class="foot">
+    Track your shows &amp; movies, together.<br />
+    This product uses the TMDB API but is not endorsed or certified by
+    <a href="https://www.themoviedb.org/">TMDB</a>.
+  </p>
+
+  <script>
+    (function () {
+      var p = new URLSearchParams(location.search);
+      var id = p.get('id'), type = p.get('t') === 'movie' ? 'movie' : 'tv';
+      var name = p.get('n'), poster = p.get('p'), by = p.get('by');
+
+      if (name) { document.getElementById('title').textContent = name; document.title = name + ' · SofaTime'; }
+      document.getElementById('kind').textContent = id ? (type === 'movie' ? 'Movie' : 'Series') : '';
+
+      if (poster) {
+        var img = document.getElementById('poster');
+        img.src = 'https://image.tmdb.org/t/p/w500' + poster;
+        img.alt = name || '';
+        img.style.display = 'block';
+      }
+      if (by) {
+        var b = document.getElementById('by');
+        b.textContent = by + ' shared this with you';
+        b.style.display = 'block';
+      }
+
+      var open = document.getElementById('open');
+      if (id) {
+        open.href = 'sofatime://show/' + encodeURIComponent(id) + '?type=' + type;
+      } else {
+        open.style.display = 'none'; // no title info — just offer the app
+      }
+    })();
+  </script>
+</body>
+</html>
