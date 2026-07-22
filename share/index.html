@@ -46,7 +46,7 @@
     <div class="actions">
       <a id="open" class="btn primary" href="#">Open in ZodyTrack</a>
       <a id="play" class="btn secondary"
-         href="https://play.google.com/store/apps/details?id=com.sofatime.app">
+         href="https://play.google.com/store/apps/details?id=com.zodytrack.app">
          Get it on Google Play</a>
     </div>
   </div>
@@ -63,7 +63,7 @@
       var id = p.get('id'), type = p.get('t') === 'movie' ? 'movie' : 'tv';
       var name = p.get('n'), poster = p.get('p'), by = p.get('by');
 
-      if (name) { document.getElementById('title').textContent = name; document.title = name + ' · SofaTime'; }
+      if (name) { document.getElementById('title').textContent = name; document.title = name + ' · zodyTrack'; }
       document.getElementById('kind').textContent = id ? (type === 'movie' ? 'Movie' : 'Series') : '';
 
       if (poster) {
@@ -80,7 +80,7 @@
 
       var open = document.getElementById('open');
       if (id) {
-        open.href = 'sofatime://show/' + encodeURIComponent(id) + '?type=' + type;
+        open.href = 'zodytrack://show/' + encodeURIComponent(id) + '?type=' + type;
       } else {
         open.style.display = 'none'; // no title info — just offer the app
       }
